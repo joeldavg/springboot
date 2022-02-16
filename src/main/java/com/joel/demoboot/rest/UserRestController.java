@@ -21,7 +21,6 @@ import com.joel.demoboot.modelo.User;
 import com.joel.demoboot.service.UserService;
 
 @RestController
-@RequestMapping("/user")
 public class UserRestController {
 
 	@Autowired
@@ -29,7 +28,7 @@ public class UserRestController {
 
 	// -----------Retrieve All Users ---------------------
 
-	@GetMapping("/all")
+	@GetMapping("/user/")
 	public ResponseEntity<List<User>> listAllUsers() {
 		List<User> users = userService.findAllUsers();
 		if (users.isEmpty()) {
@@ -41,7 +40,7 @@ public class UserRestController {
 	
 	// -----------Retrieve Single User ---------------------
 
-	@GetMapping("/{id}")
+	@GetMapping("/user/{id}")
 	public ResponseEntity<User> getUser(@PathVariable("id") Long id) {
 		System.out.println("Fetching User with id " + id);
 		Optional<User> user = userService.findById(id);
@@ -52,7 +51,7 @@ public class UserRestController {
 	
 	// -----------Save Single User ---------------------
 	
-	@PostMapping("/save")
+	@PostMapping("/user/")
 	public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
 		System.out.println("Creating User " + user.getUsername());
 		
@@ -62,14 +61,14 @@ public class UserRestController {
 		} else {
 			userService.saveUser(user);
 			HttpHeaders headers = new HttpHeaders();
-			headers.setLocation(ucBuilder.path("/save/{id}").buildAndExpand(user.getId()).toUri());
+			headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
 			return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 		}
 	}
 	
 	//------------------Update a User ---------------------------
 	
-	@PutMapping("/{id}")
+	@PutMapping("/user/{id}")
 	public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody User user) {
 		System.out.println("Updating User " + id);
 		
@@ -90,7 +89,7 @@ public class UserRestController {
 	
 	//------------------Delete a User ---------------------------
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/user/{id}")
 	public ResponseEntity<User> deleteUser(@PathVariable("id") Long id) {
 		System.out.println("Fetching & Deleting User with id " + id);
 		
@@ -107,7 +106,7 @@ public class UserRestController {
 	
 	//------------------Update All Users ---------------------------
 	
-	@DeleteMapping("/all")
+	@DeleteMapping("/user/")
 	public ResponseEntity<User> deleteAllUsers() {
 		System.out.println("Deleting All Users");
 		

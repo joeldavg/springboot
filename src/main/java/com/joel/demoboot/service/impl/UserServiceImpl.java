@@ -5,12 +5,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.joel.demoboot.modelo.User;
 import com.joel.demoboot.repository.UserRepository;
 import com.joel.demoboot.service.UserService;
 
-@Service
+@Service("userService")
+@Transactional
 public class UserServiceImpl implements UserService {
 	
 	@Autowired
